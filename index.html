@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magnetic Nanoparticles: A Silent Revolution</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC; /* Slate 50 */
+            color: #1E293B; /* Slate 800 */
+        }
+        /* Palette: Vibrant Blue/Indigo - Professional & Stylish */
+        .text-gradient {
+            background: linear-gradient(to right, #2563EB, #06B6D4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #94A3B8;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        .section-title {
+            font-size: 1.875rem;
+            font-weight: 800;
+            color: #1E293B;
+            margin-bottom: 1rem;
+            border-left: 6px solid #2563EB;
+            padding-left: 1rem;
+        }
+        /* Timeline Node styling with pure CSS */
+        .timeline-node {
+            width: 20px;
+            height: 20px;
+            background-color: #2563EB;
+            border-radius: 50%;
+            border: 4px solid #DBEAFE;
+        }
+        .timeline-line {
+            width: 4px;
+            background-color: #E2E8F0;
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header / Hero Section -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold tracking-tight text-slate-900">
+                ⚛️ Nano<span class="text-blue-600">Mag</span>
+            </h1>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#intro" class="text-slate-600 hover:text-blue-600 font-medium">Concept</a>
+                <a href="#medicine" class="text-slate-600 hover:text-blue-600 font-medium">Medicine</a>
+                <a href="#environment" class="text-slate-600 hover:text-blue-600 font-medium">Environment</a>
+                <a href="#future" class="text-slate-600 hover:text-blue-600 font-medium">Future</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+        <!-- Intro Section -->
+        <section id="intro" class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-800 text-sm font-semibold mb-4">The Invisible Revolution</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+                    Magnetic <span class="text-gradient">Nanoparticles</span>
+                </h2>
+                <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+                    Once the realm of science fiction, Richard Feynman's vision of manipulating matter atom by atom has become reality.
+                    Magnetic Nanoparticles (MNPs) are particles smaller than a strand of hair, invisible to the naked eye, yet controllable by invisible magnetic fields.
+                    From ancient lodestones to NASA's space fluids, we have now arrived at the era of "Precision Nanomedicine," where we control matter at the molecular level to cure disease and heal the planet.
+                </p>
+                <div class="flex space-x-4">
+                    <div class="text-center p-4 bg-white rounded-lg shadow-sm border border-slate-100">
+                        <div class="text-3xl font-bold text-blue-600">1-100</div>
+                        <div class="text-sm text-slate-500">Nanometers Size</div>
+                    </div>
+                    <div class="text-center p-4 bg-white rounded-lg shadow-sm border border-slate-100">
+                        <div class="text-3xl font-bold text-cyan-500">Super</div>
+                        <div class="text-sm text-slate-500">Paramagnetic</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scale Visualization -->
+            <div class="card bg-slate-900 text-white">
+                <h3 class="text-xl font-bold mb-4 text-white">Understanding the Nano Scale</h3>
+                <p class="text-slate-300 text-sm mb-6">Comparing the size of a Magnetic Nanoparticle (MNP) to biological structures. An MNP is to a tennis ball what a tennis ball is to the Earth.</p>
+                <div class="chart-container">
+                    <canvas id="scaleChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Physics Section -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="card border-t-4 border-indigo-500">
+                <h3 class="text-2xl font-bold mb-3 text-indigo-700">The Magic of Superparamagnetism</h3>
+                <p class="text-slate-600 mb-4">
+                    Unlike regular magnets that stick together (clumping in blood causes strokes), MNPs are "Superparamagnetic".
+                    They act magnetic <strong>only</strong> when an external field is ON. When the field is OFF, they essentially turn off, flowing freely through capillaries without clogging.
+                </p>
+                <div id="hysteresisChart" style="width:100%; height:300px;"></div>
+                <p class="text-xs text-center text-slate-400 mt-2">Figure: S-Curve Hysteresis Loop showing zero remanence (memory) when field is zero.</p>
+            </div>
+
+            <div class="card border-t-4 border-emerald-500">
+                <h3 class="text-2xl font-bold mb-3 text-emerald-700">Green Synthesis & Stealth</h3>
+                <p class="text-slate-600 mb-4">
+                    Modern production avoids toxic chemicals. "Green Synthesis" uses plant extracts (like tea or aloe) to reduce iron salts into nanoparticles.
+                    To survive the body's immune system, these particles wear a "Stealth Cloak" (e.g., PEG coating), making them invisible to white blood cells.
+                </p>
+                <div class="flex flex-col space-y-4 mt-6">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 flex items-center justify-center bg-emerald-100 text-2xl rounded-full">🌱</div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-slate-800">Plant Extract</h4>
+                            <p class="text-sm text-slate-500">Tea, Saffron, Garlic</p>
+                        </div>
+                    </div>
+                    <div class="text-center text-slate-300 text-xl">⬇</div>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 flex items-center justify-center bg-slate-100 text-2xl rounded-full">⚗️</div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-slate-800">Reduction</h4>
+                            <p class="text-sm text-slate-500">Iron salts convert to MNPs</p>
+                        </div>
+                    </div>
+                    <div class="text-center text-slate-300 text-xl">⬇</div>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 flex items-center justify-center bg-blue-100 text-2xl rounded-full">🛡️</div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-slate-800">Stealth Coating</h4>
+                            <p class="text-sm text-slate-500">PEG layer prevents immune attack</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Medicine Section -->
+        <section id="medicine">
+            <h2 class="section-title">The Medical Revolution</h2>
+            <p class="text-lg text-slate-600 mb-8 max-w-3xl">
+                MNPs are changing the definition of treatment. They provide "Theranostics"—therapy and diagnostics combined.
+                From lighting up tumors in MRI scans to cooking cancer cells from the inside out, these particles are saving lives where traditional methods fail.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Drug Delivery -->
+                <div class="card lg:col-span-2">
+                    <h3 class="font-bold text-xl mb-2 text-slate-800">💊 Targeted Drug Delivery vs. Chemotherapy</h3>
+                    <p class="text-sm text-slate-500 mb-4">
+                        Traditional chemo bombs the whole body. Magnetic targeting guides drugs directly to the tumor using external magnets, reducing side effects like hair loss and nausea while increasing potency at the site.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="drugDeliveryChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Hyperthermia -->
+                <div class="card bg-slate-50">
+                    <h3 class="font-bold text-xl mb-2 text-slate-800">🔥 Magnetic Hyperthermia</h3>
+                    <p class="text-sm text-slate-500 mb-4">
+                        Cancer cells are weak against heat. By vibrating MNPs with magnetic fields, we can raise the tumor temperature to the "Apoptosis Zone" (42-45°C), killing the cancer without burning healthy skin.
+                    </p>
+                    <div id="hyperthermiaGauge" style="width:100%; height:250px;"></div>
+                </div>
+            </div>
+
+            <!-- Diagnostics Row -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                <div class="card border-l-4 border-blue-500">
+                    <div class="flex items-start">
+                        <div class="text-3xl mr-4">🩻</div>
+                        <div>
+                            <h4 class="font-bold text-lg">MRI Contrast Agents</h4>
+                            <p class="text-slate-600 text-sm mt-1">
+                                Replacing toxic Gadolinium. MNPs darken T2 signals, making hidden tumors appear stark black against healthy tissue, allowing early detection of micro-metastases.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-l-4 border-cyan-500">
+                    <div class="flex items-start">
+                        <div class="text-3xl mr-4">🩸</div>
+                        <div>
+                            <h4 class="font-bold text-lg">Lab-on-a-Chip</h4>
+                            <p class="text-slate-600 text-sm mt-1">
+                                Diagnosing viruses like COVID-19 in minutes. MNPs coated with antibodies grab viruses from a blood drop and are pulled onto a sensor by a magnet for instant readout.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Environment Section -->
+        <section id="environment">
+            <h2 class="section-title">Healing the Planet</h2>
+            <p class="text-lg text-slate-600 mb-8 max-w-3xl">
+                The utility of MNPs extends beyond the body. In the environment, they act as "Magnetic Sponges," efficiently removing toxins from water and cleaning up oil spills with reusable efficiency that traditional methods cannot match.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Water Purification -->
+                <div class="card">
+                    <h3 class="font-bold text-xl mb-2 text-slate-800">💧 Water Purification Efficiency</h3>
+                    <p class="text-sm text-slate-500 mb-4">
+                        Removal of heavy metals (Arsenic, Lead, Mercury). MNPs bind to toxins in minutes and are removed via magnets, leaving water clean.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="waterChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Oil Spill Cleanup Diagram -->
+                <div class="card bg-slate-900 text-white flex flex-col justify-center">
+                    <h3 class="font-bold text-xl mb-4 text-center text-cyan-400">🛢️ Oil Spill Response</h3>
+                    <p class="text-center text-xs text-slate-400 mb-6">Hydrophobic MNPs mix with oil, making the slick magnetic.</p>
+
+                    <div class="space-y-2 px-8">
+                        <div class="flex items-center justify-between p-3 bg-slate-800 rounded border border-slate-700">
+                            <span class="text-2xl">🌊</span>
+                            <span class="font-bold text-sm">1. Oil Spill</span>
+                            <span class="text-xs text-slate-400">Disaster strikes</span>
+                        </div>
+                        <div class="text-center text-slate-500 text-lg">⬇</div>
+                        <div class="flex items-center justify-between p-3 bg-slate-800 rounded border border-slate-700">
+                            <span class="text-2xl">🚁</span>
+                            <span class="font-bold text-sm">2. Spray MNPs</span>
+                            <span class="text-xs text-slate-400">Hydrophobic Particles</span>
+                        </div>
+                        <div class="text-center text-slate-500 text-lg">⬇</div>
+                        <div class="flex items-center justify-between p-3 bg-slate-800 rounded border border-slate-700">
+                            <span class="text-2xl">🔗</span>
+                            <span class="font-bold text-sm">3. Interaction</span>
+                            <span class="text-xs text-slate-400">Oil becomes Magnetic</span>
+                        </div>
+                        <div class="text-center text-slate-500 text-lg">⬇</div>
+                        <div class="flex items-center justify-between p-3 bg-emerald-900/30 rounded border border-emerald-500/50">
+                            <span class="text-2xl">🧲</span>
+                            <span class="font-bold text-sm text-emerald-400">4. Magnetic Collection</span>
+                            <span class="text-xs text-emerald-200">100% Removal & Oil Recovery</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Industry & Agriculture -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="card md:col-span-1 border-t-4 border-yellow-500">
+                <h3 class="font-bold text-lg mb-2 text-slate-800">🏭 Industrial Catalysis</h3>
+                <p class="text-slate-600 text-sm">
+                    Catalysts are expensive (Platinum/Gold). By attaching them to MNPs, factories can recover 99% of catalysts using magnets after reactions, enabling "Green Chemistry" and massive cost savings.
+                </p>
+            </div>
+            <div class="card md:col-span-1 border-t-4 border-green-500">
+                <h3 class="font-bold text-lg mb-2 text-slate-800">🌾 Smart Agriculture</h3>
+                <p class="text-slate-600 text-sm">
+                    Nano-fertilizers stick to roots magnetically or release nutrients slowly, preventing runoff into groundwater. Magnetic pesticides target only sick plants, saving bees and the ecosystem.
+                </p>
+            </div>
+            <div class="card md:col-span-1 border-t-4 border-red-500">
+                <h3 class="font-bold text-lg mb-2 text-slate-800">🦷 Advanced Dentistry</h3>
+                <p class="text-slate-600 text-sm">
+                    Magnetic nanoparticles act as "nano-drills" inside root canals, physically disrupting bacterial biofilms in areas metal tools cannot reach, preventing reinfection.
+                </p>
+            </div>
+        </section>
+
+        <!-- Challenges Section -->
+        <section id="future" class="bg-white rounded-2xl p-8 shadow-lg border border-slate-200">
+            <h2 class="section-title">The Future & Challenges</h2>
+            <p class="text-slate-600 mb-6">
+                While promising, the path to commercialization faces the "Valley of Death". We must balance the miraculous benefits with rigorous safety standards.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="font-bold text-slate-800 mb-4 flex items-center"><span class="text-red-500 mr-2">⚠️</span> Challenges</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 bg-red-400 rounded-full mt-2 mr-2"></span>
+                            <span class="text-sm text-slate-600"><strong>Toxicity:</strong> Overdose can overwhelm the liver (Fenton Reaction), causing oxidative stress.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 bg-red-400 rounded-full mt-2 mr-2"></span>
+                            <span class="text-sm text-slate-600"><strong>Commercialization:</strong> Scaling up production while maintaining consistent particle size is difficult and expensive.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 bg-red-400 rounded-full mt-2 mr-2"></span>
+                            <span class="text-sm text-slate-600"><strong>Nano-pollution:</strong> Long-term accumulation in the food chain remains a concern.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 mb-4 flex items-center"><span class="text-green-500 mr-2">🚀</span> The Horizon</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 bg-green-400 rounded-full mt-2 mr-2"></span>
+                            <span class="text-sm text-slate-600"><strong>Personalized Medicine:</strong> Treatments designed for the individual's specific tumor genetics.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 bg-green-400 rounded-full mt-2 mr-2"></span>
+                            <span class="text-sm text-slate-600"><strong>Regenerative Medicine:</strong> 3D printing organs using magnetically levitated stem cells.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 bg-green-400 rounded-full mt-2 mr-2"></span>
+                            <span class="text-sm text-slate-600"><strong>Circular Economy:</strong> 100% recovery of valuable materials from waste streams.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-slate-400 text-sm py-8 border-t border-slate-200">
+            <p>Based on "Magnetic Nanoparticles: A Silent Revolution" Project.</p>
+            <p class="mt-2">Generated for Educational Purposes.</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- Helper Function: Wrap Labels ---
+        // Splits long strings into arrays of shorter strings for Chart.js
+        function wrapLabel(str, maxChars) {
+            if (str.length <= maxChars) return str;
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if (currentLine.length + 1 + words[i].length <= maxChars) {
+                    currentLine += ' ' + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        // --- Common Chart Options ---
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        font: { family: 'Inter', size: 12 },
+                        color: '#475569'
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleFont: { family: 'Inter', size: 14 },
+                    bodyFont: { family: 'Inter', size: 13 },
+                    padding: 12,
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            } else {
+                                return label;
+                            }
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: { ticks: { color: '#64748B', font: { family: 'Inter' } }, grid: { display: false } },
+                y: { ticks: { color: '#64748B', font: { family: 'Inter' } }, grid: { color: '#F1F5F9' } }
+            }
+        };
+
+        // --- 1. Scale Chart (Chart.js Bar) ---
+        const ctxScale = document.getElementById('scaleChart').getContext('2d');
+        new Chart(ctxScale, {
+            type: 'bar',
+            data: {
+                labels: ['Human Hair', 'Red Blood Cell', 'DNA', 'Magnetic Nanoparticle'].map(l => wrapLabel(l, 12)),
+                datasets: [{
+                    label: 'Size (Nanometers)',
+                    data: [100000, 7000, 2.5, 20],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.2)',
+                        'rgba(255, 255, 255, 0.4)',
+                        'rgba(255, 255, 255, 0.6)',
+                        '#22D3EE' // Cyan for MNP
+                    ],
+                    borderColor: 'transparent',
+                    borderWidth: 0,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                ...commonOptions,
+                indexAxis: 'y', // Horizontal Bar
+                scales: {
+                    x: {
+                        type: 'logarithmic', // Log scale needed due to massive difference
+                        ticks: { color: '#94A3B8' },
+                        grid: { color: '#334155' }
+                    },
+                    y: {
+                        ticks: { color: '#E2E8F0' },
+                        grid: { display: false }
+                    }
+                },
+                plugins: {
+                    ...commonOptions.plugins,
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // --- 2. Hysteresis Chart (Plotly.js) ---
+        // S-Curve logic simulation
+        const xValues = [];
+        const yValues = [];
+        for (let i = -10; i <= 10; i += 0.5) {
+            xValues.push(i);
+            // Langevin function approximation for superparamagnetism (no hysteresis loop width)
+            // tanh(x) shape
+            yValues.push(Math.tanh(i * 0.5));
+        }
+
+        const trace1 = {
+            x: xValues,
+            y: yValues,
+            mode: 'lines',
+            line: { color: '#4F46E5', width: 4 },
+            name: 'Magnetization'
+        };
+
+        const layoutHysteresis = {
+            margin: { t: 20, b: 40, l: 40, r: 20 },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            showlegend: false,
+            xaxis: { title: 'External Magnetic Field', showgrid: true, gridcolor: '#E2E8F0' },
+            yaxis: { title: 'Magnetization', showgrid: true, gridcolor: '#E2E8F0' }
+        };
+
+        Plotly.newPlot('hysteresisChart', [trace1], layoutHysteresis, {displayModeBar: false, responsive: true});
+
+
+        // --- 3. Drug Delivery Chart (Chart.js Grouped Bar) ---
+        const ctxDrug = document.getElementById('drugDeliveryChart').getContext('2d');
+        new Chart(ctxDrug, {
+            type: 'bar',
+            data: {
+                labels: ['Healthy Tissue', 'Tumor Tissue'].map(l => wrapLabel(l, 16)),
+                datasets: [
+                    {
+                        label: 'Standard Chemo',
+                        data: [80, 20], // High side effects, low efficacy
+                        backgroundColor: '#94A3B8',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Magnetic Targeted',
+                        data: [10, 90], // Low side effects, high efficacy
+                        backgroundColor: '#2563EB',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    tooltip: {
+                        ...commonOptions.plugins.tooltip,
+                        callbacks: {
+                            ...commonOptions.plugins.tooltip.callbacks,
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.raw + '% Concentration';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: { display: true, text: 'Drug Concentration (%)' }
+                    }
+                }
+            }
+        });
+
+        // --- 4. Hyperthermia Gauge (Plotly.js) ---
+        const dataGauge = [
+            {
+                type: "indicator",
+                mode: "gauge+number",
+                value: 43,
+                title: { text: "Tumor Temperature (°C)", font: { size: 14 } },
+                gauge: {
+                    axis: { range: [30, 50], tickwidth: 1, tickcolor: "darkblue" },
+                    bar: { color: "#F43F5E" },
+                    bgcolor: "white",
+                    borderwidth: 2,
+                    bordercolor: "gray",
+                    steps: [
+                        { range: [30, 37], color: "#E0F2FE" }, // Normal
+                        { range: [37, 41], color: "#FDE047" }, // Fever
+                        { range: [41, 46], color: "#FDA4AF" }, // Apoptosis Zone (Target)
+                        { range: [46, 50], color: "#881337" }  // Necrosis
+                    ],
+                    threshold: {
+                        line: { color: "red", width: 4 },
+                        thickness: 0.75,
+                        value: 45
+                    }
+                }
+            }
+        ];
+
+        const layoutGauge = {
+            margin: { t: 0, b: 0, l: 30, r: 30 },
+            paper_bgcolor: "rgba(0,0,0,0)",
+            font: { family: "Inter" }
+        };
+
+        Plotly.newPlot('hyperthermiaGauge', dataGauge, layoutGauge, {displayModeBar: false, responsive: true});
+
+        // --- 5. Water Purification Chart (Chart.js Line) ---
+        const ctxWater = document.getElementById('waterChart').getContext('2d');
+        new Chart(ctxWater, {
+            type: 'line',
+            data: {
+                labels: ['0 min', '5 min', '10 min', '15 min', '20 min'],
+                datasets: [
+                    {
+                        label: 'Heavy Metal Removal (%)',
+                        data: [0, 60, 85, 95, 99],
+                        borderColor: '#06B6D4', // Cyan
+                        backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#06B6D4',
+                        pointRadius: 4
+                    }
+                ]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: { display: true, text: '% Contaminants Removed' }
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
